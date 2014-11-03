@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="WeiXin.Lib.WCF.WeiXinService" CodeBehind="WeiXinService.svc.cs" %>

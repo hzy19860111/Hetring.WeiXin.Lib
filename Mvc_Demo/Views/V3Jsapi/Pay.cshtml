@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "微信V3 JSAPI支付";
+}
+@model Mvc_Demo.Models.PayModel
+
+<script language="javascript">
+    var data = {
+        "appId": "@Model.AppId", //公众号名称，由商户传入
+        "timeStamp": "@Model.Timestamp", //时间戳
+        "nonceStr": "@Model.Noncestr", //随机串
+        "package": "@Model.Package",//扩展包   
+        "signType": "MD5", //微信签名算法：MD5
+        "paySign": "@Model.PaySign" //微信签名
+    };
+
+
+    // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        //公众号支付
+        jQuery('a#getBrandWCPayRequest').click(function (e) {
+
+            WeixinJSBridge.invoke('getBrandWCPayRequest', data, function (res) {
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                  
+                    //dosomething
+                } else if(res.err_msg=="get_brand_wcpay_request:cancel") {
+                    alert("取消支付");
+                } else {
+                    alert("支付失败");
+                }
+            });
+
+        });
+    }, false);
+
+    function isWeiXin5() {
+        var ua = window.navigator.userAgent.toLowerCase();
+        var reg = /MicroMessenger\/[5-9]/i;
+        return reg.test(ua);
+    }
+
+    window.onload = function () {
+        if (isWeiXin5() == false) {
+            alert("您的微信版本低于5.0，无法使用微信支付功能，请先升级！");
+            //跳转页面
+        }
+    };
+
+
+</script>
+
+
+
+<a id="getBrandWCPayRequest" class="btn btn-blue mt30" href="javascript:void(0);">确认支付</a>

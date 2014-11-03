@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "逆编码";
+}
+@model WeiXin.Lib.Core.Models.BaiDuGeoCoding
+
+@if (Model != null && Model.Result != null)
+{
+    if (Model.Result.AddressComponent != null)
+    {
+        <p>省：@Model.Result.AddressComponent.Province</p>
+        <p>市：@Model.Result.AddressComponent.City</p>
+        <p>区：@Model.Result.AddressComponent.District</p>
+        <p>街道：@(Model.Result.AddressComponent.Street + Model.Result.AddressComponent.Street_number)</p>
+    }
+
+    if (Model.Result.Location != null)
+    {
+        <p>经度：@Model.Result.Location.Lat</p>
+        <p>纬度：@Model.Result.Location.Lng</p>
+    }
+}
